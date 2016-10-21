@@ -40,6 +40,7 @@ class PDODataBackend extends SQLDataBackend
     private $prefix = '';
 
     /**
+     * @param \PDO $pdo
      * @param String $prefix the prefix of the table names.
      */
     public function __construct(\PDO $pdo, $prefix = "bav_")
@@ -205,10 +206,10 @@ class PDODataBackend extends SQLDataBackend
             }
             $fileBackend->uninstall();
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             try {
                 if ($useTA) {
-                    $this->pdo->rollback();
+                    $this->pdo->rollBack();
 
                 }
                 throw $e;
@@ -260,7 +261,7 @@ class PDODataBackend extends SQLDataBackend
                     FOREIGN KEY (bank) REFERENCES {$this->prefix}bank(id)
                 )$createOptions"
             );
-            
+
             try {
                 $this->pdo->exec("CREATE INDEX bic ON {$this->prefix}agency (bic)");
 
@@ -359,40 +360,47 @@ class PDODataBackend extends SQLDataBackend
             return $this->getBankObject($result);
 
         } catch (\PDOException $e) {
-            $stmt->closeCursor();
+            if (isset($stmt)) {
+                $stmt->closeCursor();
+            }
             throw new DataBackendIOException();
 
         } catch (MissingAttributesDataBackendIOException $e) {
-            $stmt->closeCursor();
+            if (isset($stmt)) {
+                $stmt->closeCursor();
+            }
             throw new \LogicException($e);
 
         }
     }
 
     /**
+     * @param array $result
      * @return bool
      */
     private function isValidBankResult(Array $result)
     {
         return array_key_exists('id', $result)
-            && array_key_exists('validator', $result);
+        && array_key_exists('validator', $result);
     }
 
     /**
+     * @param array $result
      * @return bool
      */
     private function isValidAgencyResult(Array $result)
     {
         return array_key_exists('id', $result)
-            && array_key_exists('name', $result)
-            && array_key_exists('shortTerm', $result)
-            && array_key_exists('city', $result)
-            && array_key_exists('postcode', $result)
-            && array_key_exists('bic', $result)
-            && array_key_exists('pan', $result);
+        && array_key_exists('name', $result)
+        && array_key_exists('shortTerm', $result)
+        && array_key_exists('city', $result)
+        && array_key_exists('postcode', $result)
+        && array_key_exists('bic', $result)
+        && array_key_exists('pan', $result);
     }
 
     /**
+     * @param array $fetchedResult
      * @return Bank
      * @throws MissingAttributesDataBackendIOException
      */
@@ -406,6 +414,8 @@ class PDODataBackend extends SQLDataBackend
     }
 
     /**
+     * @param Bank $bank
+     * @param array $fetchedResult
      * @return Agency
      * @throws MissingAttributesDataBackendIOException
      */
@@ -432,6 +442,7 @@ class PDODataBackend extends SQLDataBackend
     }
 
     /**
+     * @param Bank $bank
      * @throws DataBackendException
      * @return Agency
      * @see DataBackend::getMainAgency()
@@ -454,17 +465,22 @@ class PDODataBackend extends SQLDataBackend
             return $this->getAgencyObject($bank, $result);
 
         } catch (\PDOException $e) {
-            $stmt->closeCursor();
+            if (isset($stmt)) {
+                $stmt->closeCursor();
+            }
             throw new DataBackendIOException($e->getMessage(), 0, $e);
 
         } catch (MissingAttributesDataBackendIOException $e) {
-            $stmt->closeCursor();
+            if (isset($stmt)) {
+                $stmt->closeCursor();
+            }
             throw new \LogicException($e);
 
         }
     }
 
     /**
+     * @param Bank $bank
      * @throws DataBackendException
      * @return Agency[]
      * @see DataBackend::getAgenciesForBank()
@@ -488,11 +504,15 @@ class PDODataBackend extends SQLDataBackend
             return $agencies;
 
         } catch (\PDOException $e) {
-            $stmt->closeCursor();
+            if (isset($stmt)) {
+                $stmt->closeCursor();
+            }
             throw new DataBackendIOException($e->getMessage(), 0, $e);
 
         } catch (MissingAttributesDataBackendIOException $e) {
-            $stmt->closeCursor();
+            if (isset($stmt)) {
+                $stmt->closeCursor();
+            }
             throw new \LogicException($e);
 
         }
@@ -523,7 +543,9 @@ class PDODataBackend extends SQLDataBackend
             return $result["value"];
 
         } catch (\PDOException $e) {
-            $stmt->closeCursor();
+            if (isset($stmt)) {
+                $stmt->closeCursor();
+            }
             throw new DataBackendIOException($e->getMessage(), $e->getCode(), $e);
 
         }
@@ -544,17 +566,19 @@ class PDODataBackend extends SQLDataBackend
                         "SELECT count(*) FROM sqlite_master
                             WHERE type='table' AND name = '{$this->prefix}meta'";
                     break;
-                
+
                 default:
+                    $dbname = $this->pdo->query('select database()')->fetchColumn();
                     $query =
                         "SELECT CASE WHEN EXISTS(
                             (SELECT * FROM information_schema.tables
-                                WHERE table_name='{$this->prefix}meta')
+                                WHERE table_name='{$this->prefix}meta'
+                                AND table_schema='$dbname')
                         ) THEN 1 ELSE 0 END";
                     break;
-                
+
             }
-            
+
             $stmt = $this->statementContainer->prepare($query);
             $stmt->execute();
             $result = $stmt->fetch();
@@ -566,7 +590,9 @@ class PDODataBackend extends SQLDataBackend
             return $result[0] == 1;
 
         } catch (\PDOException $e) {
-            $stmt->closeCursor();
+            if (isset($stmt)) {
+                $stmt->closeCursor();
+            }
             throw new DataBackendIOException($e->getMessage(), 0, $e);
 
         }
@@ -577,6 +603,7 @@ class PDODataBackend extends SQLDataBackend
      *
      * @param string $bic BIC
      * @return bool
+     * @throws DataBackendIOException
      */
     public function isValidBIC($bic)
     {
@@ -585,12 +612,14 @@ class PDODataBackend extends SQLDataBackend
                 "SELECT bic FROM {$this->prefix}agency WHERE bic = :bic GROUP BY (bic)"
             );
             $stmt->execute(array(":bic" => $bic));
-            
+
             $rows = $stmt->fetchAll();
             return ! empty($rows);
 
         } catch (\PDOException $e) {
-            $stmt->closeCursor();
+            if (isset($stmt)) {
+                $stmt->closeCursor();
+            }
             throw new DataBackendIOException($e->getMessage(), 0, $e);
 
         }
@@ -601,6 +630,8 @@ class PDODataBackend extends SQLDataBackend
      *
      * @param string $bic BIC
      * @return Agency[]
+     * @throws DataBackendIOException
+     * @throws \LogicException
      */
     public function getBICAgencies($bic)
     {
@@ -619,16 +650,20 @@ class PDODataBackend extends SQLDataBackend
             return $agencies;
 
         } catch (\PDOException $e) {
-            $stmt->closeCursor();
+            if (isset($stmt)) {
+                $stmt->closeCursor();
+            }
             throw new DataBackendIOException($e->getMessage(), 0, $e);
 
         } catch (MissingAttributesDataBackendIOException $e) {
-            $stmt->closeCursor();
+            if (isset($stmt)) {
+                $stmt->closeCursor();
+            }
             throw new \LogicException($e);
 
         }
     }
-        
+
     public function free()
     {
         parent::free();
