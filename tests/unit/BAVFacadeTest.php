@@ -2,6 +2,8 @@
 
 namespace malkusch\bav;
 
+use PHPUnit\Framework\TestCase;
+
 require_once __DIR__ . "/../bootstrap.php";
 
 /**
@@ -11,9 +13,9 @@ require_once __DIR__ . "/../bootstrap.php";
  * @author Markus Malkusch <markus@malkusch.de>
  * @see BAV
  */
-class BAVFacadeTest extends \PHPUnit_Framework_TestCase
+class BAVFacadeTest extends TestCase
 {
-    
+
     /**
      * Tests BAV::getBank();
      *
@@ -22,7 +24,7 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
     public function testGetBank()
     {
         $bav = new BAV();
-        $bank = $bav->getBank("73362500");
+        $bank = $bav->getBank("73362421");
         $this->assertNotNull($bank);
     }
 
@@ -37,7 +39,7 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
         $bav = new BAV();
         $bav->getBank("12345678");
     }
-    
+
     /**
      * Tests BAV::getAgencies();
      *
@@ -59,9 +61,9 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
     public function provideTestGetAgencies()
     {
         return array(
-            array("73362500", 0),
+            array("73362421", 0),
             array("10070000", 2),
-            array("10020890", 5),
+            array("10020890", 4),
         );
     }
 
@@ -86,7 +88,7 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
     public function testGetMainAgency()
     {
         $bav = new BAV();
-        $agency = $bav->getMainAgency("73362500");
+        $agency = $bav->getMainAgency("73362421");
         $this->assertNotNull($agency);
     }
 
@@ -104,14 +106,14 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test cases for testIsValidBank()
-     * 
+     *
      * @see testBankExists()
      * @return array
      */
     public function provideTestIsValidBank()
     {
         return array(
-            array("73362500", true),
+            array("73362421", true),
             array("12345678", false),
         );
     }
@@ -130,15 +132,15 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test cases for testIsValidBankAccount()
-     * 
+     *
      * @see testIsValidBankAccount()
      * @return array
      */
     public function provideTestIsValidBankAccount()
     {
         return array(
-            array("73362500", "0110030005", false),
-            array("73362500", "0010030005", true),
+            array("37010050", "0111395506", false),
+            array("37010050", "0011395506", true),
         );
     }
 
@@ -156,7 +158,7 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test cases for testIsValidBIC()
-     * 
+     *
      * @see testIsValidBIC()
      * @return array
      */
@@ -183,7 +185,7 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test cases for testGetBICAgencies()
-     * 
+     *
      * @see testGetBICAgencies()
      * @return array
      */
@@ -210,22 +212,22 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
             return $agency->getID();
         };
         $agenciesIds = array_map($getID, $agencies);
-        
+
         sort($expected);
         sort($agenciesIds);
         $this->assertEquals($expected, $agenciesIds);
     }
-    
+
     /**
      * Tests filter validation
-     * 
+     *
      * @see BAV::getValidAccountFilterCallback()
      * @see BAV::getValidBankFilterCallback()
      */
     public function testFilterValidation()
     {
         $bav = new BAV();
-        
+
         $this->assertFalse(
             filter_var(
                 "0",
@@ -233,7 +235,7 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
                 $bav->getValidBankFilterCallback()
             )
         );
-        
+
         $this->assertTrue(
             filter_var(
                 "10000000",
@@ -241,7 +243,7 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
                 $bav->getValidBankFilterCallback()
             )
         );
-        
+
         $this->assertTrue(
             filter_var(
                 "12345",
@@ -249,7 +251,7 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
                 $bav->getValidAccountFilterCallback()
             )
         );
-        
+
         $this->assertFalse(
             filter_var(
                 "0",
@@ -258,7 +260,7 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
-    
+
     /**
      * Tests BAV::isValidAccount();
      *
@@ -269,7 +271,7 @@ class BAVFacadeTest extends \PHPUnit_Framework_TestCase
     {
         $bav = new BAV();
         $bav->isValidBank($bankID);
-        
+
         $this->assertEquals($expected, $bav->isValidAccount($account));
     }
 }
