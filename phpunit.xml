@@ -12,6 +12,14 @@
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/unit</directory>
         </testsuite>
+
+        <testsuite name="BackendTest">
+            <file>./tests/unit-large/BackendTest.php</file>
+        </testsuite>
+
+        <testsuite name="CrossProjectTest">
+            <file>./tests/unit-large/CrossProjectTest.php</file>
+        </testsuite>
     </testsuites>
     <php>
         <env name="PDO_DSN" value="sqlite:data/test.sqlite"/>
