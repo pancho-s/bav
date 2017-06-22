@@ -2,6 +2,8 @@
 
 namespace malkusch\bav;
 
+use PHPUnit\Framework\TestCase;
+
 require_once __DIR__ . "/../bootstrap.php";
 
 /**
@@ -10,7 +12,7 @@ require_once __DIR__ . "/../bootstrap.php";
  * @license WTFPL
  * @author Markus Malkusch <markus@malkusch.de>
  */
-class URIPickerTest extends \PHPUnit_Framework_TestCase
+class URIPickerTest extends TestCase
 {
 
     /**
@@ -61,7 +63,7 @@ class URIPickerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             // @codingStandardsIgnoreStart
-            "/Redaktion/DE/Downloads/Aufgaben/Unbarer_Zahlungsverkehr/Bankleitzahlen/2014_09_07/blz_2014_06_09_txt.txt?__blob=publicationFile",
+            "/Redaktion/DE/Downloads/Aufgaben/Unbarer_Zahlungsverkehr/Bankleitzahlen/2017_09_03/blz_2017_06_05_txt.txt?__blob=publicationFile",
             // @codingStandardsIgnoreEnd
             $uri
         );

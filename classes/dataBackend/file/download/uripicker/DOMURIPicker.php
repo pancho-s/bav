@@ -37,12 +37,19 @@ class DOMURIPicker implements URIPicker
         $xpath = new \DOMXpath($doc);
 
         $result = $xpath->query(
-            "(//a[contains(text(), 'Bankleitzahlendateien') and contains(@href, '.txt')]/@href)[1]"
+            "//*[contains(text(),'Bankleitzahlendateien')]"
         );
-        if ($result->length != 1) {
-            throw new URIPickerException("Did not find download URI");
 
+        foreach ($result as $node) {
+            if ($node->parentNode && $node->parentNode->nodeName == 'a') {
+                $hrefNode = $node->parentNode->attributes->getNamedItem('href');
+
+                if ($hrefNode && strpos($hrefNode->value, '.txt')) {
+                    return $hrefNode->value;
+                }
+            }
         }
-        return $result->item(0)->value;
+
+        throw new URIPickerException("Did not find download URI");
     }
 }
