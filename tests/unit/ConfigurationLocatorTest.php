@@ -2,6 +2,8 @@
 
 namespace malkusch\bav;
 
+use PHPUnit\Framework\TestCase;
+
 require_once __DIR__ . "/../bootstrap.php";
 
 /**
@@ -11,12 +13,12 @@ require_once __DIR__ . "/../bootstrap.php";
  * @licends GPL
  * @see ConfigurationLocator
  */
-class ConfigurationLocatorTest extends \PHPUnit_Framework_TestCase
+class ConfigurationLocatorTest extends TestCase
 {
-    
+
     /**
      * locate() should return null
-     * 
+     *
      * @see ConfigurationLocator::locate();
      */
     public function testlocateReturnsNull()
@@ -24,10 +26,10 @@ class ConfigurationLocatorTest extends \PHPUnit_Framework_TestCase
         $locator = new ConfigurationLocator(array(__DIR__ . "/noop.php"));
         $this->assertNull($locator->locate());
     }
-    
+
     /**
      * locate() should throw an exception
-     * 
+     *
      * @see ConfigurationLocator::locate();
      * @expectedException malkusch\bav\ConfigurationException
      */
@@ -38,10 +40,10 @@ class ConfigurationLocatorTest extends \PHPUnit_Framework_TestCase
         ));
         $locator->locate();
     }
-    
+
     /**
      * locate() should find absolute paths
-     * 
+     *
      * @param string[] $paths
      * @dataProvider provideTestLocateFindsAbsolutePath
      * @see ConfigurationLocator::locate();
@@ -50,14 +52,14 @@ class ConfigurationLocatorTest extends \PHPUnit_Framework_TestCase
     {
         $locator = new ConfigurationLocator($paths);
         $configuration = $locator->locate();
-        
+
         $this->assertInstanceOf("malkusch\bav\Configuration", $configuration);
         $this->assertEquals("test", $configuration->getTempDirectory());
     }
-    
+
     /**
      * Test cases for testLocateFindsAbsolutePath().
-     * 
+     *
      * @return string[][][]
      * @see testLocateFindsAbsolutePath()
      */
@@ -65,17 +67,17 @@ class ConfigurationLocatorTest extends \PHPUnit_Framework_TestCase
     {
         $existingPath = __DIR__ . "/../data/configuration.php";
         $notExistingPath = __DIR__ . "/../data/noop.php";
-        
+
         return array(
             array(array($existingPath)),
             array(array($existingPath, $notExistingPath)),
             array(array($notExistingPath, $existingPath)),
         );
     }
-    
+
     /**
      * locate() should find paths from the include path
-     * 
+     *
      * @param string[] $paths
      * @dataProvider provideTestLocateFindsIncludePath
      * @see ConfigurationLocator::locate();
@@ -83,19 +85,19 @@ class ConfigurationLocatorTest extends \PHPUnit_Framework_TestCase
     public function testLocateFindsIncludePath($includePath, array $paths)
     {
         set_include_path(get_include_path() . PATH_SEPARATOR . $includePath);
-        
+
         $locator = new ConfigurationLocator($paths);
         $configuration = $locator->locate();
-        
+
         $this->assertInstanceOf("malkusch\bav\Configuration", $configuration);
         $this->assertEquals("test", $configuration->getTempDirectory());
-        
+
         restore_include_path();
     }
-    
+
     /**
      * Test cases for testLocateFindsIncludePath().
-     * 
+     *
      * @return string[][][]
      * @see testLocateFindsIncludePath()
      */
@@ -104,7 +106,7 @@ class ConfigurationLocatorTest extends \PHPUnit_Framework_TestCase
         $existingPath = "configuration.php";
         $notExistingPath = "noop.php";
         $includePath = __DIR__ . "/../data";
-        
+
         return array(
             array($includePath, array($existingPath)),
             array($includePath, array($existingPath, $notExistingPath)),

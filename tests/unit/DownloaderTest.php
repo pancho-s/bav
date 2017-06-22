@@ -2,6 +2,8 @@
 
 namespace malkusch\bav;
 
+use PHPUnit\Framework\TestCase;
+
 require_once __DIR__ . "/../bootstrap.php";
 
 /**
@@ -10,7 +12,7 @@ require_once __DIR__ . "/../bootstrap.php";
  * @license WTFPL
  * @author Markus Malkusch <markus@malkusch.de>
  */
-class DownloaderTest extends \PHPUnit_Framework_TestCase
+class DownloaderTest extends TestCase
 {
 
     /**
@@ -27,7 +29,7 @@ class DownloaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests downloadContent();
-     * 
+     *
      * @param string $uri URI
      * @param string $md5 expected MD5 sum
      * @dataProvider provideTestURIs
@@ -42,7 +44,7 @@ class DownloaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests downloadFile();
-     * 
+     *
      * @param string $uri URI
      * @param string $md5 expected MD5 sum
      * @dataProvider provideTestURIs
@@ -58,7 +60,7 @@ class DownloaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests a sequence of downloadContent() and downloadFile().
-     * 
+     *
      * @param string $uri URI
      * @param string $md5 expected MD5 sum
      * @dataProvider provideTestURIs
@@ -68,7 +70,7 @@ class DownloaderTest extends \PHPUnit_Framework_TestCase
     public function testDownloadSequence($uri, $md5)
     {
         $downloader = new Downloader();
-        
+
         $content = $downloader->downloadContent($uri);
         $this->assertEquals($md5, md5($content));
 
@@ -82,7 +84,7 @@ class DownloaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests failing downloadContent();
-     * 
+     *
      * @expectedException malkusch\bav\DownloaderException
      * @see Downloader::downloadContent()
      */
@@ -94,7 +96,7 @@ class DownloaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests failing downloadFile();
-     * 
+     *
      * @expectedException malkusch\bav\DownloaderException
      * @see Downloader::downloadFile()
      */
