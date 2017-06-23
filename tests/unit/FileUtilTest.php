@@ -2,6 +2,8 @@
 
 namespace malkusch\bav;
 
+use PHPUnit\Framework\TestCase;
+
 require_once __DIR__ . "/../bootstrap.php";
 
 /**
@@ -11,7 +13,7 @@ require_once __DIR__ . "/../bootstrap.php";
  * @author Markus Malkusch <markus@malkusch.de>
  * @license WTFPL
  */
-class FileUtilTest extends \PHPUnit_Framework_TestCase
+class FileUtilTest extends TestCase
 {
 
     /**
@@ -38,10 +40,10 @@ class FileUtilTest extends \PHPUnit_Framework_TestCase
     public function testSetConfiguredTempDirectory()
     {
         $directory = "/root";
-        
+
         $configuration = new DefaultConfiguration();
         $configuration->setTempDirectory($directory);
-        
+
         $fileUtil = new FileUtil($configuration);
         $this->assertEquals($directory, $fileUtil->getTempDirectory());
     }
@@ -57,7 +59,7 @@ class FileUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests getting /tmp.
-     * 
+     *
      * @requires OS Linux
      */
     public function testLinuxTempDirectory()

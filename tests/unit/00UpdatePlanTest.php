@@ -2,6 +2,8 @@
 
 namespace malkusch\bav;
 
+use PHPUnit\Framework\TestCase;
+
 require_once __DIR__ . "/../bootstrap.php";
 
 /**
@@ -14,12 +16,12 @@ require_once __DIR__ . "/../bootstrap.php";
  * @license WTFPL
  * @author Markus Malkusch <markus@malkusch.de>
  */
-class UpdatePlanTest extends \PHPUnit_Framework_TestCase
+class UpdatePlanTest extends TestCase
 {
 
     /**
      * Provide test cases for testIsOutdated()
-     * 
+     *
      * @see testIsOutdated()
      */
     public function provideTestIsOutdated()
@@ -42,7 +44,7 @@ class UpdatePlanTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests isOutdated()
-     * 
+     *
      * @dataProvider provideTestIsOutdated
      * @param string $mtime file time
      * @param string $time current time

@@ -2,6 +2,8 @@
 
 namespace malkusch\bav;
 
+use PHPUnit\Framework\TestCase;
+
 require_once __DIR__ . "/../bootstrap.php";
 
 /**
@@ -11,12 +13,12 @@ require_once __DIR__ . "/../bootstrap.php";
  * @see BICUtil
  * @author Markus Malkusch <markus@malkusch.de>
  */
-class BICUtilTest extends \PHPUnit_Framework_TestCase
+class BICUtilTest extends TestCase
 {
 
     /**
      * Test cases for testNormalize
-     * 
+     *
      * @see testNormalize()
      */
     public function provideTestNormalize()
@@ -29,7 +31,7 @@ class BICUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests BICUtil:normalize()
-     * 
+     *
      * @see BICUtil::normalize()
      * @dataProvider provideTestNormalize()
      */

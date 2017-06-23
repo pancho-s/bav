@@ -2,6 +2,8 @@
 
 namespace malkusch\bav;
 
+use PHPUnit\Framework\TestCase;
+
 require_once __DIR__ . "/../bootstrap.php";
 
 /**
@@ -10,7 +12,7 @@ require_once __DIR__ . "/../bootstrap.php";
  * @license WTFPL
  * @author Markus Malkusch <markus@malkusch.de>
  */
-class BackendContainerTest extends \PHPUnit_Framework_TestCase
+class BackendContainerTest extends TestCase
 {
 
     /**
@@ -23,7 +25,7 @@ class BackendContainerTest extends \PHPUnit_Framework_TestCase
         $container = new FileDataBackendContainer(tempnam($fileUtil->getTempDirectory(), 'bavtest'));
 
         $this->assertTrue(ConfigurationRegistry::getConfiguration()->isAutomaticInstallation());
-    
+
         $backend = $container->getDataBackend();
         $this->assertTrue($backend->isInstalled());
 
@@ -42,7 +44,7 @@ class BackendContainerTest extends \PHPUnit_Framework_TestCase
         $fileUtil = new FileUtil();
         $container = new FileDataBackendContainer(tempnam($fileUtil->getTempDirectory(), 'bavtest'));
         $backend = $container->getDataBackend();
-            
+
         touch($backend->getFile(), strtotime("-1 year"));
         $this->assertTrue($updatePlan->isOutdated($backend));
 

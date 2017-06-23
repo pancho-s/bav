@@ -2,6 +2,8 @@
 
 namespace malkusch\bav;
 
+use PHPUnit\Framework\TestCase;
+
 require_once __DIR__ . "/../bootstrap.php";
 
 /**
@@ -12,12 +14,12 @@ require_once __DIR__ . "/../bootstrap.php";
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @see FileParser
  */
-class FileParserTest extends \PHPUnit_Framework_TestCase
+class FileParserTest extends TestCase
 {
-    
+
     /**
      * Tests using the default file
-     * 
+     *
      * @see FileParser::__construct()
      */
     public function testDefaultFile()
@@ -28,40 +30,40 @@ class FileParserTest extends \PHPUnit_Framework_TestCase
             realpath($parser->getFile())
         );
     }
-    
+
     /**
      * Tests getAgency()
-     * 
+     *
      * @see FileParser::getAgency()
      */
     public function testGetAgency()
     {
         $this->markTestIncomplete();
     }
-    
+
     /**
      * Tests getBank()
-     * 
+     *
      * @see FileParser::getBank()
      */
     public function testGetBank()
     {
         $this->markTestIncomplete();
     }
-    
+
     /**
      * Tests getBankID()
-     * 
+     *
      * @see FileParser::getBankID()
      */
     public function testGetBankID()
     {
         $this->markTestIncomplete();
     }
-    
+
     /**
      * Tests getLineLength()
-     * 
+     *
      * @see FileParser::getLineLength()
      * @dataProvider provideTestGetLineLength
      */
@@ -70,10 +72,10 @@ class FileParserTest extends \PHPUnit_Framework_TestCase
         $parser = new FileParser($file);
         $this->assertEquals($lineLength, $parser->getLineLength());
     }
-    
+
     /**
      * Test cases for testGetLineLength()
-     * 
+     *
      * @return array
      * @see testGetLineLength()
      */
@@ -84,10 +86,10 @@ class FileParserTest extends \PHPUnit_Framework_TestCase
             array(170, __DIR__ . "/../data/fileParserTest/bb-excerpt.txt"),
         );
     }
-    
+
     /**
      * Tests getLines()
-     * 
+     *
      * @see FileParser::getLines()
      * @dataProvider provideTestGetLines
      */
@@ -96,10 +98,10 @@ class FileParserTest extends \PHPUnit_Framework_TestCase
         $parser = new FileParser($file);
         $this->assertEquals($lines, $parser->getLines());
     }
-    
+
     /**
      * Test cases for testGetLines()
-     * 
+     *
      * @return array
      * @see testGetLines()
      */
@@ -110,10 +112,10 @@ class FileParserTest extends \PHPUnit_Framework_TestCase
             array(10, __DIR__ . "/../data/fileParserTest/bb-excerpt.txt"),
         );
     }
-    
+
     /**
      * Tests readLine()
-     * 
+     *
      * @see FileParser::readLine()
      * @dataProvider provideTestReadLine
      */
@@ -123,10 +125,10 @@ class FileParserTest extends \PHPUnit_Framework_TestCase
         $data = $parser->readLine($line);
         $this->assertEquals($expectedData, $data);
     }
-    
+
     /**
      * Test cases for testReadLine()
-     * 
+     *
      * @return string[][]
      * @see testReadLine()
      */
@@ -145,10 +147,10 @@ class FileParserTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
-    
+
     /**
      * Tests seekLine()
-     * 
+     *
      * @see FileParser::seekLine()
      */
     public function testSeekLine()

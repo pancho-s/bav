@@ -2,6 +2,8 @@
 
 namespace malkusch\bav;
 
+use PHPUnit\Framework\TestCase;
+
 require_once __DIR__ . "/../bootstrap.php";
 
 /**
@@ -11,33 +13,33 @@ require_once __DIR__ . "/../bootstrap.php";
  * @license WTFPL
  * @link https://github.com/bav-php/bav/pull/18
  */
-class Validator74_PR18_Test extends \PHPUnit_Framework_TestCase
+class Validator74_PR18_Test extends TestCase
 {
 
     /**
      * Tests for Validator74 which produces accumulators which end from 1 to 14.
-     * 
+     *
      * A halfdecade seems to be understanded as 5, 15, 25, ….
-     * 
+     *
      * @param string $account  The account id.
      * @param bool   $expected The expected validation result.
-     * 
+     *
      * @dataProvider provideTestAllHalfDecades
      * @link https://www.mail-archive.com/aqbanking-devel@lists.sourceforge.net/msg01292.html
      */
     public function testAllHalfDecades($account, $expected)
     {
-        $backend = $this->getMock("malkusch\bav\FileDataBackend");
-        $bank = $this->getMock(
+        $backend = $this->createMock("malkusch\bav\FileDataBackend");
+        $bank = $this->createMock(
                 "malkusch\bav\Bank", array(), array($backend, 1, 74));
-        
+
         $validator = new Validator74($bank);
         $this->assertEquals($expected, $validator->isValid($account));
     }
-    
+
     /**
      * Returns test cases for testAllHalfDecades().
-     * 
+     *
      * @return array Test cases.
      */
     public function provideTestAllHalfDecades()
