@@ -9,15 +9,19 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Unit">
+        <testsuite name="UnitTests">
             <directory suffix="Test.php">./tests/unit</directory>
         </testsuite>
 
-        <testsuite name="BackendTest">
+        <testsuite name="ValidatorTests">
+            <directory suffix="Test.php">./tests/unit/validators</directory>
+        </testsuite>
+
+        <testsuite name="BackendTests">
             <file>./tests/unit-large/BackendTest.php</file>
         </testsuite>
 
-        <testsuite name="CrossProjectTest">
+        <testsuite name="CrossProjectTests">
             <file>./tests/unit-large/CrossProjectTest.php</file>
         </testsuite>
     </testsuites>
