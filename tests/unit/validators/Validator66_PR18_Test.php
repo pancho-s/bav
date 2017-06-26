@@ -4,8 +4,6 @@ namespace malkusch\bav;
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . "/../bootstrap.php";
-
 /**
  * Test for the issue of PR18.
  *
@@ -19,8 +17,8 @@ class Validator66_PR18_Test extends TestCase
     /**
      * Tests for Validator66 which produces the remainer 0 and 1.
      *
-     * @param string $account  The account id.
-     * @param bool   $expected The expected validation result.
+     * @param string $account The account id.
+     * @param bool $expected The expected validation result.
      *
      * @dataProvider provideTestRemainer0and1
      * @link https://www.mail-archive.com/aqbanking-devel@lists.sourceforge.net/msg01292.html
@@ -29,7 +27,7 @@ class Validator66_PR18_Test extends TestCase
     {
         $backend = $this->createMock("malkusch\bav\FileDataBackend");
         $bank = $this->createMock(
-                "malkusch\bav\Bank", array(), array($backend, 1, 66));
+            "malkusch\bav\Bank", array(), array($backend, 1, 66));
 
         $validator = new Validator66($bank);
         $this->assertEquals($expected, $validator->isValid($account));
