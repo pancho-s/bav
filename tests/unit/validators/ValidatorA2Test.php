@@ -4,7 +4,7 @@ namespace malkusch\bav;
 
 use PHPUnit\Framework\TestCase;
 
-class ValidatorB1Test extends TestCase
+class ValidatorA2Test extends TestCase
 {
     private $validator;
 
@@ -14,9 +14,9 @@ class ValidatorB1Test extends TestCase
 
         $backend = $this->createMock("malkusch\bav\FileDataBackend");
         $bank = $this->createMock(
-            "malkusch\bav\Bank", array(), array($backend, 1, 'B1'));
+            "malkusch\bav\Bank", array(), array($backend, 1, 'A2'));
 
-        $this->validator = new ValidatorB1($bank);
+        $this->validator = new ValidatorA2($bank);
     }
 
     /**
@@ -38,35 +38,20 @@ class ValidatorB1Test extends TestCase
     public function provideTestData()
     {
         return [
-            // variant 1
-            ['1434253150', true],
-            ['2746315471', true],
+            // variant one
+            ['3456789019', true],
+            ['5678901231', true],
+            ['6789012348', true],
 
             // variant one
-            ['0123456789', false],
-            ['2345678901', false],
-            ['5678901234', false],
-
-            // variant 2
-            ['7414398260', true],
-            ['8347251693', true],
+            ['1234567890', false],
 
             // variant two
-            ['0123456789', false],
-            ['2345678901', false],
-            ['5678901234', false],
+            ['3456789012', true],
 
-            // variant 3
-            ['1501824', true],
-            ['1501832', true],
-            ['539290858', true],
-            ['7414398268', true],
-            ['8347251699', true],
-
-            // variant three
+            // variant two
+            ['1234567890', false],
             ['0123456789', false],
-            ['2345678901', false],
-            ['5678901234', false],
         ];
     }
 }
