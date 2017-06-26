@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="tests/bin/test-install.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
+    <testsuites>
+        <testsuite name="BackendTests">
+            <file>./tests/integration/BackendTest.php</file>
+        </testsuite>
+
+        <testsuite name="CrossProjectTests">
+            <file>./tests/integration/CrossProjectTest.php</file>
+        </testsuite>
+
+        <testsuite name="IntegrationTests">
+            <directory suffix="Test.php">./tests/integration/</directory>
+            <exclude>./tests/integration/BackendTest.php</exclude>
+            <exclude>./tests/integration/CrossProjectTest.php</exclude>
+        </testsuite>
+    </testsuites>
+    <php>
+        <env name="PDO_DSN" value="sqlite:data/test.sqlite"/>
+        <env name="PDO_USER" value="testing"/>
+        <env name="PDO_PASSWORD" value=""/>
+    </php>
+</phpunit>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
-         bootstrap="tests/bin/test-install.php"
+         bootstrap="tests/bootstrap.php"
          colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
@@ -11,23 +11,11 @@
     <testsuites>
         <testsuite name="UnitTests">
             <directory suffix="Test.php">./tests/unit</directory>
+            <exclude>./tests/unit/validators</exclude>
         </testsuite>
 
         <testsuite name="ValidatorTests">
             <directory suffix="Test.php">./tests/unit/validators</directory>
         </testsuite>
-
-        <testsuite name="BackendTests">
-            <file>./tests/unit-large/BackendTest.php</file>
-        </testsuite>
-
-        <testsuite name="CrossProjectTests">
-            <file>./tests/unit-large/CrossProjectTest.php</file>
-        </testsuite>
     </testsuites>
-    <php>
-        <env name="PDO_DSN" value="sqlite:data/test.sqlite"/>
-        <env name="PDO_USER" value="testing"/>
-        <env name="PDO_PASSWORD" value=""/>
-    </php>
 </phpunit>
