@@ -2,11 +2,10 @@
 
 namespace malkusch\bav;
 
+use PHPUnit\Framework\TestCase;
 
-class Validator52Test extends \PHPUnit_Framework_TestCase
+class ValidatorE1Test extends TestCase
 {
-    private $bank;
-
     private $validator;
 
     public function setUp()
@@ -14,23 +13,20 @@ class Validator52Test extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $backend = $this->createMock("malkusch\bav\FileDataBackend");
-        $this->bank = $this->createMock(
-            "malkusch\bav\Bank", array(), array($backend, 1, '52'));
+        $bank = $this->createMock(
+            "malkusch\bav\Bank", array(), array($backend, 1, 'E1'));
 
-        $this->validator = new Validator52($this->bank);
+        $this->validator = new ValidatorE1($bank);
     }
 
     /**
      * @param string $account The account id.
      * @param bool $expected The expected validation result.
-     * @param int $bankId
      *
      * @dataProvider provideTestData
      */
-    public function testIsValid($account, $expected, $bankId)
+    public function testIsValid($account, $expected)
     {
-        $this->bank->method('getBankID')->willReturn($bankId);
-
         $this->assertEquals($expected, $this->validator->isValid($account));
     }
 
@@ -42,12 +38,15 @@ class Validator52Test extends \PHPUnit_Framework_TestCase
     public function provideTestData()
     {
         return [
-            ['43001500', true, '13051172'],
+            ['0100041104', true],
+            ['0100054106', true],
+            ['0200025107', true],
 
-            ['43001499', false, '13051172'],
-            ['43001501', false, '13051172'],
-            ['43001500', false, '13051171'],
-            ['43001500', false, '13051173'],
+            ['0150013107', false],
+            ['0200035101', false],
+            ['0081313890', false],
+            ['4268550840', false],
+            ['0987402008', false],
         ];
     }
 }

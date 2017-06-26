@@ -2,8 +2,11 @@
 
 namespace malkusch\bav;
 
+use PHPUnit\Framework\TestCase;
+use Prophecy\Exception\Exception;
+use spec\Prophecy\Argument\Token\ExactValueTokenSpec;
 
-class Validator52Test extends \PHPUnit_Framework_TestCase
+class ValidatorB6Test extends TestCase
 {
     private $bank;
 
@@ -15,9 +18,9 @@ class Validator52Test extends \PHPUnit_Framework_TestCase
 
         $backend = $this->createMock("malkusch\bav\FileDataBackend");
         $this->bank = $this->createMock(
-            "malkusch\bav\Bank", array(), array($backend, 1, '52'));
+            "malkusch\bav\Bank", array(), array($backend, 1, 'B6'));
 
-        $this->validator = new Validator52($this->bank);
+        $this->validator = new ValidatorB6($this->bank);
     }
 
     /**
@@ -27,7 +30,7 @@ class Validator52Test extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provideTestData
      */
-    public function testIsValid($account, $expected, $bankId)
+    public function testIsValid($account, $expected, $bankId = 1)
     {
         $this->bank->method('getBankID')->willReturn($bankId);
 
@@ -42,12 +45,18 @@ class Validator52Test extends \PHPUnit_Framework_TestCase
     public function provideTestData()
     {
         return [
-            ['43001500', true, '13051172'],
+            // Variant 1
+            ['9110000000', true],
+            ['0269876545', true],
 
-            ['43001499', false, '13051172'],
-            ['43001501', false, '13051172'],
-            ['43001500', false, '13051171'],
-            ['43001500', false, '13051173'],
+            ['9111000000', false],
+            ['0269456780', false],
+
+            // Variant 2
+            ['487310018', true, '80053782'],
+
+            ['467310018', false, '80053762'],
+            ['477310018', false, '80053772'],
         ];
     }
 }
