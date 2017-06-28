@@ -27,11 +27,6 @@ class ValidatorD5Test extends TestCase
      */
     public function testIsValid($account, $expected)
     {
-        // FIXME: fix validation for variant 3
-        if ('8623410000' === $account) {
-            $this->markTestSkipped('Validation for 8623410000 is possibly wrong and needs to be fixed');
-        }
-
         $this->assertEquals($expected, $this->validator->isValid($account));
     }
 
@@ -64,12 +59,12 @@ class ValidatorD5Test extends TestCase
             ['0004711172', true],
             ['0007093335', true],
 
-            ['8623410000', false],
             ['0001123458', false],
 
             // Variant 4
             ['0000100062', true],
             ['0000100088', true],
+            ['8623410000', true],
 
             ['0000100084', false],
             ['0000100085', false],
