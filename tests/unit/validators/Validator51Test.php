@@ -27,11 +27,6 @@ class Validator51Test extends TestCase
      */
     public function testIsValid($account, $expected)
     {
-        // FIXME: fix validation for method B
-        if ('0001234566' === $account) {
-            $this->markTestSkipped('Validation for 0001234566 is wrong and needs to be fixed');
-        }
-
         $this->assertEquals($expected, $this->validator->isValid($account));
     }
 
@@ -55,13 +50,13 @@ class Validator51Test extends TestCase
             ['0001234567', true],
 
             // method B
-            ['0001234566', false], // FIXME: should fail - validator seems not to work correct here
             ['0012345678', false],
 
             // method C
             ['340968', true],
             ['201178', true],
             ['1009588', true],
+            ['0001234566', true],
 
             // method C
             ['0023456783', false],

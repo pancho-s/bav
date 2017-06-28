@@ -65,6 +65,10 @@ class Validator93Test extends TestCase
             // modulus 11 and 7
             ['3067550000', false],
             ['0000306755', false],
+
+            // tests from ValidatorA4
+            ['8623420004', true],
+            ['8623420000', true],
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace malkusch\bav;
 
 use PHPUnit\Framework\TestCase;
 
-class ValidatorD3Test extends TestCase
+class ValidatorA4bTest extends TestCase
 {
     private $validator;
 
@@ -14,9 +14,9 @@ class ValidatorD3Test extends TestCase
 
         $backend = $this->createMock("malkusch\bav\FileDataBackend");
         $bank = $this->createMock(
-            "malkusch\bav\Bank", array(), array($backend, 1, 'D3'));
+            "malkusch\bav\Bank", array(), array($backend, 1, 'A4b'));
 
-        $this->validator = new ValidatorD3($bank);
+        $this->validator = new ValidatorA4b($bank);
     }
 
     /**
@@ -38,23 +38,11 @@ class ValidatorD3Test extends TestCase
     public function provideTestData()
     {
         return [
-            // Variant 1
-            ['1600169591', true],
-            ['1600189151', true],
-            ['1800084079', true],
+            ['0004711172', true],
+            ['0007093335', true],
 
-            ['1600166307', false],
-
-            // Variant 2
-            ['6019937007', true],
-            ['6021354007', true],
-            ['6030642006', true],
-            ['1600176485', true],
-            ['1600201934', true],
-
-            ['6025017009', false],
-            ['6028267003', false],
-            ['6019835001', false],
+            ['8623420000', false],
+            ['0001123458', false],
         ];
     }
 }

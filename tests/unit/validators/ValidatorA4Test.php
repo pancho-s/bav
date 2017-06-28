@@ -27,16 +27,6 @@ class ValidatorA4Test extends TestCase
      */
     public function testIsValid($account, $expected)
     {
-        // FIXME: fix validation for variant one
-        if ('8623420004' === $account) {
-            $this->markTestSkipped('Validation for 8623420004 should fail but doesn\'t and needs to be fixed');
-        }
-
-        // FIXME: fix validation for variant two
-        if ('8623420000' === $account) {
-            $this->markTestSkipped('Validation for 8623420000 should fail but doesn\'t and needs to be fixed');
-        }
-
         $this->assertEquals($expected, $this->validator->isValid($account));
     }
 
@@ -52,15 +42,12 @@ class ValidatorA4Test extends TestCase
             ['0004711173', true],
             ['0007093330', true],
 
-            // variant one
-            ['8623420004', false],
-
             // variant two
             ['0004711172', true],
             ['0007093335', true],
 
             // variant two
-            ['8623420000', false],
+
 
             // variant three
             ['1199503010', true],
@@ -77,6 +64,8 @@ class ValidatorA4Test extends TestCase
             ['5030101099', true],
             ['0001123458', true],
             ['1299503117', true],
+            ['8623420004', true],
+            ['8623420000', true],
 
             // variant four
             ['0000399443', false],
