@@ -21,15 +21,31 @@ namespace malkusch\bav;
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-class Validator74 extends ValidatorChain
+class Validator74a extends Validator00
 {
     public function __construct(Bank $bank)
     {
         parent::__construct($bank);
-        $this->validators[] = new Validator74a($bank);
 
-        $this->validators[] = new Validator04($bank);
-        $this->validators[1]->setWeights([2, 3, 4, 5, 6, 7, 2, 3, 4]);
-        $this->validators[1]->setDivisor(11);
+        $this->setWeights(array(2, 1));
+    }
+
+    public function isValid($account)
+    {
+        return strlen($account) >= 2 && parent::isValid($account);
+    }
+
+    protected function getResult()
+    {
+        if (parent::getResult()) {
+            return true;
+        } elseif (strlen(ltrim($this->account, '0')) == 6) {
+            $nextHalfDecade = round($this->accumulator / 10) * 10 + 5;
+            $check = ($nextHalfDecade - $this->accumulator) % 10;
+            
+            return (string) $check === $this->getChecknumber();
+        }
+
+        return false;
     }
 }
