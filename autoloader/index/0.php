@@ -104,6 +104,7 @@ return array(
     'malkusch\bav\validator72' => '../classes/validator/validators/Validator72.php',
     'malkusch\bav\validator73' => '../classes/validator/validators/Validator73.php',
     'malkusch\bav\validator74' => '../classes/validator/validators/Validator74.php',
+    'malkusch\bav\validator74a' => '../classes/validator/validators/Validator74a.php',
     'malkusch\bav\validator75' => '../classes/validator/validators/Validator75.php',
     'malkusch\bav\validator76' => '../classes/validator/validators/Validator76.php',
     'malkusch\bav\validator77' => '../classes/validator/validators/Validator77.php',
