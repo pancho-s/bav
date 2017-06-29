@@ -27,11 +27,6 @@ class ValidatorB8Test extends TestCase
      */
     public function testIsValid($account, $expected)
     {
-        // FIXME: fix validation for variant 3
-        if ('5011654366' === $account) {
-            $this->markTestSkipped('Validation for 5011654366 is possibly wrong and needs to be fixed');
-        }
-
         $this->assertEquals($expected, $this->validator->isValid($account));
     }
 
@@ -48,13 +43,13 @@ class ValidatorB8Test extends TestCase
             ['6932875274', true],
 
             ['0132572975', false],
-            ['5011654366', false],
             ['9000412340', false],
             ['9310305011', false],
 
             // Variant 2
             ['3145863029', true],
             ['2938692523', true],
+            ['5011654366', true],
 
             ['0132572975', false],
             ['9000412340', false],
