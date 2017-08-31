@@ -29,9 +29,7 @@ class ValidatorC2 extends ValidatorChain
         parent::__construct($bank);
 
         $this->validators[] = new Validator22($bank);
-        $this->validators[0]->setWeights(array(3, 1));
-
         $this->validators[] = new Validator00($bank);
-        $this->validators[1]->setWeights(array(2, 1));
+        $this->validators[] = new Validator04($bank);
     }
 }

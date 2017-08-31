@@ -45,10 +45,16 @@ class ValidatorC2Test extends TestCase
 
             ['0328705282', false],
             ['9024675131', false],
+            ['9024675131', false],
 
             // Variant 2
             ['5127485166', true],
             ['8738142564', true],
+
+            // Variant 3
+            ['0076543216', true],
+            ['3456789012', true],
+            ['9024675138', true],
         ];
     }
 }
