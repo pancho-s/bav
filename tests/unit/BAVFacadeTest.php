@@ -24,7 +24,7 @@ class BAVFacadeTest extends TestCase
     public function testGetBank()
     {
         $bav = new BAV();
-        $bank = $bav->getBank("73362421");
+        $bank = $bav->getBank("10011001");
         $this->assertNotNull($bank);
     }
 
@@ -61,7 +61,7 @@ class BAVFacadeTest extends TestCase
     public function provideTestGetAgencies()
     {
         return array(
-            array("73362421", 0),
+            array("10011001", 0),
             array("10070000", 2),
             array("10020890", 4),
         );
@@ -88,7 +88,7 @@ class BAVFacadeTest extends TestCase
     public function testGetMainAgency()
     {
         $bav = new BAV();
-        $agency = $bav->getMainAgency("73362421");
+        $agency = $bav->getMainAgency("10011001");
         $this->assertNotNull($agency);
     }
 
@@ -113,7 +113,7 @@ class BAVFacadeTest extends TestCase
     public function provideTestIsValidBank()
     {
         return array(
-            array("73362421", true),
+            array("10011001", true),
             array("12345678", false),
         );
     }
