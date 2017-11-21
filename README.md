@@ -10,7 +10,7 @@ Use [Composer](https://getcomposer.org/):
 ```json
 {
     "require": {
-        "malkusch/bav": "^1"
+        "cashlink/bav": "^1"
     }
 }
 ```
@@ -184,15 +184,7 @@ as data backend.
 
 # License and authors
 
-This project is free and under the WTFPL. So do what ever you want.
-But it would be nice to leave a note about the authors.
-
 The author of the original project which gave the idea to this project is
-Björn Wilmsmann. Responsable for this project is Markus Malkusch <markus@malkusch.de>.
-
-## Donations
-
-If you like BAV and feel generous donate a few Bitcoins here:
-[1335STSwu9hST4vcMRppEPgENMHD2r1REK](bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK)
+Björn Wilmsmann. Previous maintainer is Markus Malkusch <markus@malkusch.de>.
 
 [![Build Status](https://travis-ci.org/bav-php/bav.svg?branch=master)](https://travis-ci.org/bav-php/bav)
