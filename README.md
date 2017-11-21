@@ -2,6 +2,8 @@
 
 BAV (bank account validator) is a validation library for German bank accounts.
 
+This repository is an actively maintained fork of the original project. It it also regularly released to packagist.org, so you can install it with Composer using `cashlink/bav`.
+
 
 # Installation
 
