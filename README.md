@@ -10,7 +10,7 @@ Use [Composer](https://getcomposer.org/):
 ```json
 {
     "require": {
-        "cashlink/bav": "^1"
+        "cashlink/bav": "^3"
     }
 }
 ```
