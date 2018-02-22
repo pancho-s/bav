@@ -18,7 +18,7 @@ class FileDataBackend extends DataBackend
 {
     
     // @codingStandardsIgnoreStart
-    const DOWNLOAD_URI = "http://www.bundesbank.de/Redaktion/DE/Standardartikel/Aufgaben/Unbarer_Zahlungsverkehr/bankleitzahlen_download.html";
+    const DOWNLOAD_URI = "https://www.bundesbank.de/Redaktion/DE/Standardartikel/Aufgaben/Unbarer_Zahlungsverkehr/bankleitzahlen_download.html";
     // @codingStandardsIgnoreEnd
 
     /**
@@ -32,7 +32,7 @@ class FileDataBackend extends DataBackend
     private $parser;
     
     /**
-     * @var Index_FixedSize
+     * @var FixedSizeIndex
      */
     private $index;
 
@@ -378,7 +378,7 @@ class FileDataBackend extends DataBackend
     {
         $time = filemtime($this->parser->getFile());
         if ($time === false) {
-            return new DataBackendException(
+            throw new DataBackendException(
                 "Could not read modification time from {$this->parser->getFile()}"
             );
 
