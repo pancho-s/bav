@@ -1,5 +1,5 @@
 {
-    "name": "malkusch/bav",
+    "name": "cashlink/bav",
     "type": "library",
     "description": "BAV provides validation for German Bank Accounts (Konto)",
     "keywords": ["bank", "account", "bankaccount", "validation", "check", "konto"],
@@ -18,7 +18,7 @@
     },
     "require": {
         "php": ">=7.0.0",
-        "malkusch/php-index": "~0.1"
+        "cashlink/php-index": "~1.0.0"
     },
     "suggest": {
         "ext-PDO": "Allows storing bank information in a database",
