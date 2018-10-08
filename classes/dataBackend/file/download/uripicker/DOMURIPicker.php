@@ -37,7 +37,7 @@ class DOMURIPicker implements URIPicker
         $xpath = new \DOMXpath($doc);
 
         $result = $xpath->query(
-            "//*[contains(text(),'Bankleitzahlendateien')]"
+            "//*[contains(.,'Bankleitzahlendateien')]"
         );
 
         foreach ($result as $node) {
