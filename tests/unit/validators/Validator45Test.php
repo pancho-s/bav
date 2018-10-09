@@ -49,6 +49,9 @@ class Validator45Test extends TestCase
             ['1000199999', true],
             ['0100114240', true],
 
+            // no check sum because account number starts with 48
+            ['4890001112', true],
+
             ['3545343233', false],
             ['4013410025', false],
 
@@ -59,6 +62,9 @@ class Validator45Test extends TestCase
             // no check sum available because 5th position equals 1 (one) - negation
             ['1000299999', false],
             ['1100214240', false],
+
+            // no check sum because account number starts with 48 - negation
+            ['5890001112', false],
         ];
     }
 }

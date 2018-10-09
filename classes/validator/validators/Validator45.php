@@ -38,6 +38,7 @@ class Validator45 extends Validator00
     {
         return $this->account{0} === '0'
             || $this->account{4} === '1'
+            || substr($this->account, 0, 2) === '48'
             || parent::getResult();
     }
 }
