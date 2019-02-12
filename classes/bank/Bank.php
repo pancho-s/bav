@@ -127,7 +127,29 @@ class Bank
         }
         return $this->agencies;
     }
-    
+
+    /**
+     * Get agency by Bundesbank ID
+     *
+     * @throws DataBackendException
+     * @return Agency
+     */
+    public function getAgency(int $id)
+    {
+        $mainAgency = $this->getMainAgency();
+        if ($mainAgency->getID() == $id) {
+            return $mainAgency;
+
+        } else {
+            foreach ($this->getAgencies() as $agency) {
+                if ($agency->getID() == $id) {
+                    return $agency;
+
+                }
+            }
+        }
+    }
+
     /**
      * @internal
      */
