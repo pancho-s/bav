@@ -176,6 +176,15 @@ abstract class DataBackend
     abstract public function getBICAgencies($bic);
 
     /**
+     * Returns bank agency by its Bundesbank identifier.
+     *
+     * @throws DataBackendIOException
+     * @throws DataBackendException
+     * @return Agency
+     */
+    abstract public function getAgency($id);
+
+    /**
      * Returns if a bic is valid.
      *
      * @param string $bic BIC

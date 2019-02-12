@@ -330,6 +330,32 @@ class FileDataBackend extends DataBackend
     }
 
     /**
+     * @see DataBackend::getAgency()
+     * @throws DataBackendIOException
+     * @throws DataBackendException
+     * @return Agency
+     */
+    public function getAgency($id)
+    {
+      try {
+        for ($i = 0; $i < $this->parser->getLines(); $i++) {
+          $line = $this->parser->readLine($i);
+          $bank = $this->parser->getBank($this, $line);
+          $agency = $this->parser->getAgency($bank, $line);
+          if ($agency->getID() == (int)$id) {
+            return $agency;
+          }
+        }
+
+      } catch (FileParserIOException $e) {
+        throw new DataBackendIOException();
+
+      } catch (ParseException $e) {
+        throw new DataBackendException();
+      }
+    }
+
+    /**
      * @return FileParserContext
      */
     private function defineContextInterval($bankID)

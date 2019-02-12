@@ -194,6 +194,17 @@ class BAV
     }
 
     /**
+     * Returns bank agency by its Bundesbank identifier.
+     *
+     * @param int $id Bundesbank-ID
+     * @return \malkusch\bav\Agency
+     */
+    public function getAgency($id)
+    {
+      return $this->backend->getAgency($id);
+    }
+
+    /**
      * Returns if a bic is valid.
      *
      * @param string $bic BIC
